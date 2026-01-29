@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CareNest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <div class="auth-card">
+        <!-- Header -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
+            <div class="logo-circle" style="width: 40px; height: 40px;"></div>
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; line-height: 1.1;">CareNest</h2>
+                <p style="font-size: 0.8rem; color: var(--text-light);">Calm, reliable care documentation.</p>
+            </div>
+        </div>
+
+        <h1 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem;">Secure sign-in</h1>
+        <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.4;">
+            This login demonstrates <strong>privacy + role-based access</strong>. Data is stored locally to show
+            persistence.
+        </p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" class="input-field" placeholder="e.g., Sarah (Caregiver)">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Role</label>
+                <select class="input-field"
+                    style="appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.65em auto;">
+                    <option value="caregiver">Caregiver</option>
+                    <option value="admin">Admin</option>
+                    <option value="family">Family Member</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Passcode (demo)</label>
+                <input type="password" class="input-field" placeholder="Enter any passcode">
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" class="btn btn-outline" style="flex: 1; border-color: rgba(90,59,46,0.2);">Clear
+                    session</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">Enter workspace</button>
+            </div>
+        </form>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
