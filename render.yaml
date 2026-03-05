@@ -6,8 +6,8 @@ services:
     startCommand: python backend/server.py
     envVars:
       - key: SUPABASE_URL
-        fromEnvVar: SUPABASE_URL
+        sync: false
       - key: SUPABASE_KEY
-        fromEnvVar: SUPABASE_KEY
+        sync: false
       - key: GEMINI_API_KEY
-        fromEnvVar: GEMINI_API_KEY
+        sync: false
