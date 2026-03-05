@@ -161,12 +161,36 @@ def get_ai_insight():
             "clinical_insight": insight
         })
     except Exception as e:
-        print(f"!!! Error in get_ai_insight: {str(e)}")
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"!!! Error in get_ai_insight:\n{error_details}")
         return jsonify({
             "status": "error", 
-            "clinical_insight": f"AI Hub Offline. Reason: {str(e)}", 
-            "error": str(e)
+            "clinical_insight": f"AI Hub encountered an internal error. Please check server logs.", 
+            "details": str(e)
         }), 500
+
+@app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Diagnostic endpoint to verify backend status"""
+    return jsonify({
+        "status": "healthy",
+        "environment": "vercel" if os.environ.get("VERCEL") else "local",
+        "database_connected": supabase is not None,
+        "api_endpoints": ["/api/health", "/api/ai-insight", "/api/medications", "/api/symptoms"]
+    }), 200
+
+# Catch-all route to help debug routing issues
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    print(f"--- Unrecognized Request Path: /{path} ---")
+    return jsonify({
+        "error": "Not Found",
+        "requested_path": f"/{path}",
+        "suggestion": "Check your API endpoint or vercel.json configuration."
+    }), 404
 
 if __name__ == '__main__':
     # Use the port assigned by Render, or default to 5000 for local development
