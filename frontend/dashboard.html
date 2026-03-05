@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace - CareNest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Dashboard-Specific Professional Add-ons */
+        body {
+            background-color: #F8F5F2;
+        }
+
+        /* Soft cream dashboard background */
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 100px auto 40px;
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            /* Professional Three-Column Layout */
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            height: fit-content;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card-pro {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+
+        .ai-prompt {
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            list-style: none;
+        }
+
+        .ai-prompt:hover {
+            background: white;
+            transform: translateX(5px);
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-panel-pro {
+            background: #F4EAD2;
+            border-radius: 24px;
+            padding: 24px;
+            height: fit-content;
+            border: 1px solid rgba(90, 59, 46, 0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .ai-message-pro {
+            background: #ffffff;
+            padding: 14px 18px;
+            border-radius: 18px 18px 18px 4px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #4A3728;
+            /* Solid deep brown for clarity */
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 500;
+        }
+
+        .user-message-pro {
+            background: var(--secondary);
+            color: white !important;
+            padding: 12px 16px;
+            border-radius: 16px 16px 4px 16px;
+            font-size: 0.9rem;
+            align-self: flex-end;
+            margin-bottom: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Skeleton Loading for Phase 8 */
+        @keyframes shimmer {
+            0% {
+                background-position: -468px 0
+            }
+
+            100% {
+                background-position: 468px 0
+            }
+        }
+
+        .skeleton {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 800px 104px;
+            display: inline-block;
+            position: relative;
+            animation: shimmer 1s linear infinite forwards;
+            border-radius: 4px;
+        }
+
+        .handover-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+            padding-right: 8px;
+        }
+
+        .handover-entry {
+            background: #fff;
+            padding: 16px;
+            border-radius: 14px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .handover-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .chip-role {
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .role-doctor {
+            background: #E1F5FE;
+            color: #0288D1;
+        }
+
+        .role-caregiver {
+            background: #F1F8E9;
+            color: #558B2F;
+        }
+
+        .role-family {
+            background: #FFF3E0;
+            color: #E65100;
+        }
+
+        .ai-status-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .status-live {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-sim {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Professional Navbar for Dashboard -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">CareNest</div>
+            </a>
+            <div class="nav-links">
+                <span style="font-size: 0.85rem; color: var(--text-light); font-weight: 600;">Resident: **Resident
+                    A**</span>
+                <a href="login.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+
+
+        <aside class="sidebar-card">
+            <h3
+                style="font-size: 0.9rem; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; letter-spacing: 1px;">
+                Workspace</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <a href="dashboard.html" class="btn btn-primary"
+                    style="text-align: left; padding: 12px 16px; width: 100%;">
+                    <i data-lucide="pill"
+                        style="width: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i> Medication
+                </a>
+                <a href="symptoms.html" class="btn btn-outline"
+                    style="text-align: left; border: none; padding: 12px 16px; width: 100%; color: var(--text-dark);">
+                    <i data-lucide="activity"
+                        style="width: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i> Symptoms
+                </a>
+                <a href="routines.html" class="btn btn-outline"
+                    style="text-align: left; border: none; padding: 12px 16px; width: 100%; color: var(--text-dark);">
+                    <i data-lucide="coffee"
+                        style="width: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i> Routines
+                </a>
+                <a href="guide.html" class="btn btn-outline"
+                    style="text-align: left; border: none; padding: 12px 16px; width: 100%; color: var(--text-dark);">
+                    <i data-lucide="book-open"
+                        style="width: 18px; display: inline; vertical-align: middle; margin-right: 8px;"></i> Academy
+                </a>
+            </div>
+        </aside>
+
+
+        <section class="main-content">
+            <div class="chip-stack">
+                <span class="chip">Status: Stable</span>
+                <span class="chip">Last Update: 10:45 AM</span>
+                <span class="chip" style="background: rgba(0,0,0,0.05); color: var(--text-dark);">Encrypted
+                    Connection</span>
+            </div>
+
+            <div class="card-pro">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 1.25rem; font-weight: 800;">Daily Medication Timeline</h2>
+                    <button id="addRecordBtn" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">+
+                        Add Record</button>
+                </div>
+
+
+                <div id="medicationTimeline"
+                    style="border-left: 2px solid var(--primary); padding-left: 24px; margin-left: 10px; display: flex; flex-direction: column; gap: 30px;">
+                    <div class="skeleton" style="height: 60px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="card-pro">
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 24px;">Symptom Severity Trends</h2>
+                <div style="height: 250px;">
+                    <canvas id="symptomChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card-pro">
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Shift Handover Feed</h2>
+                <div id="handoverFeed" class="handover-feed">
+                    <p style="color: var(--text-light); font-size: 0.9rem;">Loading clinical feed...</p>
+                </div>
+                <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                    <textarea id="handoverText" class="input-field" rows="3"
+                        placeholder="Add a clinical note or family update..."></textarea>
+                    <button id="saveHandoverBtn" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Post
+                        Update</button>
+                </div>
+            </div>
+        </section>
+
+
+        <aside class="ai-panel-pro" style="display: flex; flex-direction: column; overflow: hidden; max-height: 80vh;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-shrink: 0;">
+                <i data-lucide="sparkles" style="color: var(--secondary); width: 24px;"></i>
+                <h2 style="font-size: 1.1rem; font-weight: 800; color: var(--secondary);">Clinical Advisor</h2>
+            </div>
+
+            <div id="aiChatBox"
+                style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; padding-right: 8px;">
+                <div class="ai-message-pro">
+                    <p style="font-size: 0.9rem; line-height: 1.6; color: var(--secondary); opacity: 0.8;">
+                        System ready. Summarizing latest health patterns...
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.4); border-radius: 12px; padding: 16px; flex-shrink: 0;">
+                <h4
+                    style="font-size: 0.8rem; font-weight: 700; color: var(--secondary); margin-bottom: 12px; text-transform: uppercase;">
+                    Suggested Prompts:</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li class="ai-prompt">"Summarize latest health patterns"</li>
+                    <li class="ai-prompt">"Deep dive into medication risks"</li>
+                </ul>
+
+                <div style="margin-top: 16px; display: flex; gap: 8px;">
+                    <input type="text" id="customAiPrompt" class="input-field" placeholder="Ask anything..."
+                        style="padding: 8px 12px; font-size: 0.85rem;">
+                    <button id="sendAiPrompt" class="btn btn-primary" style="padding: 8px; border-radius: 8px;">
+                        <i data-lucide="send" style="width: 16px;"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- Step 20: Add Record Modal -->
+    <div id="addModal"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="auth-card" style="width: 100%; max-width: 450px; position: relative;">
+            <button onclick="toggleModal(false)"
+                style="position: absolute; right: 20px; top: 20px; border: none; background: none; cursor: pointer; color: var(--text-light);"><i
+                    data-lucide="x"></i></button>
+            <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Add New Medication</h2>
+
+            <form id="addMedForm">
+                <div class="input-group">
+                    <label class="input-label">Pill Name</label>
+                    <input type="text" id="pillName" class="input-field" placeholder="e.g., Amoxicillin" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Dosage</label>
+                    <input type="text" id="dosage" class="input-field" placeholder="e.g., 500mg" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="input-group">
+                        <label class="input-label">Frequency</label>
+                        <input type="text" id="frequency" class="input-field" placeholder="Daily">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Stock</label>
+                        <input type="number" id="stock" class="input-field" value="30">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Save
+                    Record</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Step 20: Chart.js for Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        lucide.createIcons();
+
+        function toggleModal(show) {
+            document.getElementById('addModal').style.display = show ? 'flex' : 'none';
+        }
+
+        // Connect the "+ Add Record" button
+        document.getElementById('addRecordBtn').onclick = () => toggleModal(true);
+
+        // Step 20: Submission Controller
+        document.getElementById('addMedForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Saving...";
+
+            await addMedication(
+                document.getElementById('pillName').value,
+                document.getElementById('dosage').value,
+                document.getElementById('frequency').value,
+                document.getElementById('stock').value
+            );
+
+            btn.innerText = "Save Record";
+            toggleModal(false);
+            loadDashboard(); // Refresh the list instantly!
+        };
+
+
+        const handoverBtn = document.getElementById('saveHandoverBtn');
+        if (handoverBtn) {
+            handoverBtn.onclick = async () => {
+                const text = document.getElementById('handoverText').value;
+                if (!text.trim()) return;
+
+                handoverBtn.innerText = "Posting...";
+                try {
+                    await saveHandover(text);
+                    document.getElementById('handoverText').value = "";
+                    handoverBtn.innerText = "Posted! ✓";
+                    await renderHandoverFeed();
+                    setTimeout(() => handoverBtn.innerText = "Post Update", 2000);
+                } catch (err) {
+                    alert("Post failed: " + err.message);
+                    handoverBtn.innerText = "Post Update";
+                }
+            };
+        }
+
+        async function renderHandoverFeed() {
+            const feed = document.getElementById('handoverFeed');
+            const history = await fetchHandoverHistory();
+
+            if (history && history.length > 0) {
+                feed.innerHTML = history.map(note => `
+                    <div class="handover-entry">
+                        <div class="handover-meta">
+                            <span>${note.sender_name}</span>
+                            <span class="chip-role role-${note.sender_role ? note.sender_role.toLowerCase() : 'caregiver'}">${note.sender_role || 'STAFF'}</span>
+                        </div>
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-dark);">${note.note_content}</p>
+                        <div style="font-size: 0.7rem; color: var(--text-light); margin-top: 8px;">
+                            ${new Date(note.logged_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                feed.innerHTML = '<p style="color: var(--text-light); font-size: 0.9rem;">No clinical notes logged yet.</p>';
+            }
+        }
+
+
+        // Typewriter Effect for Premium UX
+        function typeWriter(element, text, speed = 7) {
+            element.innerHTML = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    if (text.charAt(i) === '<') {
+                        let tag = "";
+                        while (i < text.length && text.charAt(i) !== '>') {
+                            tag += text.charAt(i);
+                            i++;
+                        }
+                        tag += '>';
+                        i++;
+                        element.innerHTML += tag;
+                    } else if (text.charAt(i) === '\n') {
+                        element.innerHTML += "<br>";
+                        i++;
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        async function handleAiChat(prompt) {
+            const chatBox = document.getElementById('aiChatBox');
+
+            // 1. Add User Message UI
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'user-message-pro';
+            userMsgDiv.innerText = prompt;
+            chatBox.appendChild(userMsgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Add AI Loading Message
+            const aiMsgDiv = document.createElement('div');
+            aiMsgDiv.className = 'ai-message-pro'; // No animation
+            aiMsgDiv.innerText = "Consulting Clinical AI Hub...";
+            chatBox.appendChild(aiMsgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const data = await getAIInsight(prompt);
+
+                if (data && data.clinical_insight) {
+                    const statusClass = data.status === 'success' ? 'status-live' : 'status-sim';
+                    const statusText = data.status === 'success' ? 'LIVE BIO-ANALYSIS' : 'SMART SIMULATION';
+
+                    aiMsgDiv.innerHTML = `
+                        <div class="ai-status-badge ${statusClass}">${statusText}</div>
+                        <div class="ai-content-text"></div>
+                    `;
+                    const contentTarget = aiMsgDiv.querySelector('.ai-content-text');
+                    typeWriter(contentTarget, data.clinical_insight);
+                } else {
+                    aiMsgDiv.innerText = "System currently focused on data integrity. Please retry shortly.";
+                }
+            } catch (err) {
+                aiMsgDiv.innerText = "Clinical Hub Offline. Reconnecting...";
+            }
+        }
+
+        // Custom Prompt Controller
+        document.getElementById('sendAiPrompt').onclick = () => {
+            const input = document.getElementById('customAiPrompt');
+            if (input.value.trim()) {
+                handleAiChat(input.value);
+                input.value = "";
+            }
+        };
+
+        // Enter key for Chat
+        document.getElementById('customAiPrompt').onkeypress = (e) => {
+            if (e.key === 'Enter') document.getElementById('sendAiPrompt').click();
+        };
+
+        // Suggested Prompt Controller
+        document.querySelectorAll('.ai-prompt').forEach(li => {
+            li.onclick = () => {
+                const prompt = li.innerText.replace(/"/g, '');
+                handleAiChat(prompt);
+            };
+        });
+
+
+        async function loadDashboard() {
+            // Parallelize fetching for speed (Fixes the 5s delay)
+            const [data, history] = await Promise.all([
+                fetchDashboardData(),
+                fetchHandoverHistory()
+            ]);
+
+            const { meds, symptoms } = data;
+
+            // 1. Render Handover Feed
+            const feed = document.getElementById('handoverFeed');
+            if (history && history.length > 0) {
+                feed.innerHTML = history.map(note => `
+                    <div class="handover-entry">
+                        <div class="handover-meta">
+                            <span>${note.sender_name}</span>
+                            <span class="chip-role role-${note.sender_role ? note.sender_role.toLowerCase() : 'caregiver'}">${note.sender_role || 'STAFF'}</span>
+                        </div>
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-dark);">${note.note_content}</p>
+                        <div style="font-size: 0.7rem; color: var(--text-light); margin-top: 8px;">
+                            ${new Date(note.logged_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 2. Load AI Insight
+            const chatBox = document.getElementById('aiChatBox');
+            getAIInsight("Analyze").then(aiData => {
+                if (aiData && aiData.clinical_insight) {
+                    chatBox.innerHTML = ""; // Clear initial
+                    const aiMsgDiv = document.createElement('div');
+                    aiMsgDiv.className = 'ai-message-pro';
+                    chatBox.appendChild(aiMsgDiv);
+
+                    const statusClass = aiData.status === 'success' ? 'status-live' : 'status-sim';
+                    const statusText = aiData.status === 'success' ? 'LIVE BIO-ANALYSIS' : 'SMART SIMULATION';
+
+                    aiMsgDiv.innerHTML = `
+                        <div class="ai-status-badge ${statusClass}">${statusText}</div>
+                        <div class="ai-content-text"></div>
+                    `;
+                    const contentTarget = aiMsgDiv.querySelector('.ai-content-text');
+                    typeWriter(contentTarget, aiData.clinical_insight);
+                }
+            });
+
+            // 3. Render Medication Timeline
+            const timeline = document.getElementById('medicationTimeline');
+            if (meds && meds.length > 0) {
+                timeline.innerHTML = meds.map(m => `
+                    <div style="border-left: 2px solid var(--primary); padding-left: 24px; margin-left: 10px; margin-bottom: 20px;">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary);">${m.frequency || 'Daily'}</span>
+                        <h4 style="font-size: 1rem; margin: 4px 0;">${m.pill_name} (${m.dosage})</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-light);">Stock: ${m.stock_count} units</p>
+                    </div>
+                `).join('');
+            } else {
+                timeline.innerHTML = '<p style="color: var(--text-light); font-size: 0.9rem; padding: 20px 0;">No medication records found.</p>';
+            }
+
+            // 4. Render Chart
+            if (symptoms && symptoms.length > 0) {
+                const ctx = document.getElementById('symptomChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: symptoms.slice(0, 7).reverse().map(s => {
+                            const d = new Date(s.logged_at);
+                            return d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+                        }),
+                        datasets: [{
+                            label: 'Severity Level',
+                            data: symptoms.slice(0, 7).reverse().map(s => s.severity || 0),
+                            borderColor: '#6B7B4E',
+                            backgroundColor: 'rgba(107, 123, 78, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { min: 0, max: 10, ticks: { stepSize: 1 } } }
+                    }
+                });
+            }
+        }
+
+        loadDashboard();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareNest | Professional Care Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">CareNest</div>
+            </a>
+            <div class="nav-links">
+                <a href="login.html" class="btn btn-outline" style="margin-right: 10px;">Login</a>
+                <a href="register.html" class="btn btn-primary">Join Workspace</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <header class="hero-section container">
+        <div class="hero-grid">
+            <div class="reveal">
+                <span
+                    style="color: var(--primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">Introducing
+                    CareNest</span>
+                <h1
+                    style="font-size: 3.5rem; margin-top: 20px; color: var(--secondary); line-height: 1.1; font-weight: 800;">
+                    Calm and Clinical.<br><span style="color: var(--primary);">Better documentation for everyone.</span>
+                </h1>
+                <p style="color: var(--text-light); max-width: 500px; margin: 30px 0; font-size: 1.15rem;">
+                    A specialized digital medical companion, a solution for high-stakes medical and care environments.
+                    Where precision tracking meets clinical intelligence through automatic and safe data documentation
+                    and AI insight.
+                </p>
+                <div style="display: flex; gap: 15px; margin-top: 40px;">
+                    <a href="register.html" class="btn btn-primary" style="padding: 16px 40px;">Get Started Free</a>
+                    <a href="#features" class="btn btn-outline" style="padding: 16px 40px;">View Features</a>
+                </div>
+            </div>
+            <div class="hero-image-container reveal" style="animation-delay: 0.2s;">
+                <img src="images/hero.png" alt="CareNest Hero" class="hero-image">
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="feature-section container">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--secondary);">Built for Clinical Excellence</h2>
+            <p style="color: var(--text-light); font-size: 1.1rem; margin-top: 10px;">Streamlined tools for the modern
+                care professional.</p>
+        </div>
+
+        <div class="feature-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card reveal" style="animation-delay: 0.1s;">
+                <div class="feature-icon-box">
+                    <i data-lucide="pill"></i>
+                </div>
+                <h3>Precision Medication</h3>
+                <p style="color: var(--text-light); margin-top: 15px;">Automated timelines and stock tracking to ensure
+                    patient safety and dose accuracy.</p>
+                <img src="images/tracking.png" alt="Tracking"
+                    style="width: 100%; border-radius: 12px; margin-top: 20px;">
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card reveal" style="animation-delay: 0.2s;">
+                <div class="feature-icon-box">
+                    <i data-lucide="sparkles"></i>
+                </div>
+                <h3>AI Clinical Advisor</h3>
+                <p style="color: var(--text-light); margin-top: 15px;">Real-time pattern recognition and health alerts
+                    powered by OpenAI's clinical model.</p>
+                <img src="images/ai_advisor.png" alt="AI Advisor"
+                    style="width: 100%; border-radius: 12px; margin-top: 20px;">
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card reveal" style="animation-delay: 0.3s;">
+                <div class="feature-icon-box">
+                    <i data-lucide="users"></i>
+                </div>
+                <h3>Multi-Role Handover</h3>
+                <p style="color: var(--text-light); margin-top: 15px;">A unified feed for Doctors, Caregivers, and
+                    Families to stay synchronized on patient care.</p>
+                <div
+                    style="background: var(--bg-cream); height: 180px; border-radius: 12px; margin-top: 20px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 700;">
+                    Role-Based Security
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo" style="color: white;">
+                <div class="logo-circle" style="background: white;"></div>
+                CareNest
+            </div>
+            <div style="display: flex; gap: 30px;">
+                <a href="#" style="color: white; text-decoration: none; opacity: 0.8;">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 CareNest. Excellence in Clinical Care.
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        // Simple Intersection Observer to trigger reveal animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.classList.add('reveal');
+                }
+            });
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CareNest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px;">
+
+    <!-- Reuse Navbar (No Buttons for Auth Pages to reduce distraction) -->
+    <nav class="navbar" style="top: 20px;">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">CareNest</div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" style="text-decoration: none; color: var(--primary); font-weight: 600;">&larr; Back
+                    Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+            <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--text-dark);">Welcome Back</h1>
+            <p style="color: var(--text-light); margin-top: 0.5rem; font-size: 0.9rem;">Please enter your details to
+                sign in</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label class="input-label">Email Address</label>
+                <input type="email" id="email" class="input-field" placeholder="caregiver@carenest.com" required>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Sign In</button>
+        </form>
+
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                await signInUser(email, password);
+            });
+        </script>
+
+        <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-light);">
+            New to CareNest? <a href="register.html"
+                style="color: var(--primary); font-weight: 700; text-decoration: none;">Create an account</a>
+        </p>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

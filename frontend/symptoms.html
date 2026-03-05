@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Tracking - CareNest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #F8F5F2;
+        }
+
+        .workspace-container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 24px;
+        }
+
+        .header-section {
+            margin-bottom: 32px;
+        }
+
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, min-minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .tracking-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+            transition: transform 0.2s ease;
+        }
+
+        .tracking-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .option-btn {
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            background: #fdfdfd;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(107, 123, 78, 0.05);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Shared Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">CareNest</div>
+            </a>
+            <div class="nav-links" style="display: flex; gap: 12px;">
+                <a href="guide.html" class="btn btn-outline"
+                    style="padding: 8px 16px; font-size: 0.8rem; border-color: var(--primary); color: var(--primary);">
+                    <i data-lucide="book-open" style="width: 14px; vertical-align: middle; margin-right: 4px;"></i>
+                    Academy</a>
+                <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;">&larr;
+                    Back to Workspace</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="workspace-container">
+
+        <div class="header-section">
+            <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--text-dark);">Daily Observation Log</h1>
+            <p style="color: var(--text-light); margin-top: 4px;">Record physiological and behavioral patterns for
+                **Resident A**</p>
+        </div>
+
+        <div class="symptom-grid">
+
+
+            <div class="tracking-card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <i data-lucide="coffee" style="color: var(--accent); width: 20px;"></i>
+                    <h2 style="font-size: 1rem; font-weight: 700;">Nutritional Intake</h2>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light);">How much was consumed during lunch?</p>
+                <div class="option-grid">
+                    <div class="option-btn">Full Meal</div>
+                    <div class="option-btn">Partial</div>
+                    <div class="option-btn">Minimal</div>
+                    <div class="option-btn">Refused</div>
+                </div>
+            </div>
+
+
+            <div class="tracking-card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <i data-lucide="moon" style="color: var(--primary); width: 20px;"></i>
+                    <h2 style="font-size: 1rem; font-weight: 700;">Sleep Pattern</h2>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light);">Quality of rest last night:</p>
+                <div class="option-grid">
+                    <div class="option-btn">Restful</div>
+                    <div class="option-btn">Interrupted</div>
+                    <div class="option-btn">Restless</div>
+                    <div class="option-btn">Insomnia</div>
+                </div>
+            </div>
+
+            <!-- Severity Rating (Step 20 Data Source) -->
+            <div class="tracking-card" style="grid-column: 1 / -1;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <i data-lucide="bar-chart-3" style="color: var(--primary); width: 20px;"></i>
+                    <h2 style="font-size: 1rem; font-weight: 700;">Overall Severity Tracking</h2>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light);">On a scale of 1-10, how severe were the
+                    symptoms today?</p>
+                <div style="margin-top: 20px;">
+                    <input type="range" id="severityRange" min="1" max="10" value="5"
+                        style="width: 100%; accent-color: var(--primary);">
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: var(--text-light); margin-top: 8px;">
+                        <span>1 (Minimum)</span>
+                        <span id="rangeValue" style="color: var(--primary); font-size: 1.1rem;">5</span>
+                        <span>10 (Maximum)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tracking-card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <i data-lucide="smile" style="color: var(--secondary); width: 20px;"></i>
+                    <h2 style="font-size: 1rem; font-weight: 700;">Mood & Affect</h2>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light);">Observed emotional state:</p>
+                <div class="option-grid">
+                    <div class="option-btn">Cheerful</div>
+                    <div class="option-btn">Calm</div>
+                    <div class="option-btn">Agitated</div>
+                    <div class="option-btn">Withdrawn</div>
+                </div>
+            </div>
+
+
+            <div class="tracking-card" style="grid-column: 1 / -1;">
+                <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px;">Additional Observations</h2>
+                <textarea class="input-field" rows="3"
+                    placeholder="Describe any unusual physical symptoms or behavioral changes..."></textarea>
+                <div style="margin-top: 20px; text-align: right;">
+                    <button class="btn btn-primary" style="padding: 12px 32px;">Save Observations</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Interaction Logic with Feedback
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent = btn.parentElement;
+                parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 100);
+            });
+        });
+
+        // Slider UI feedback
+        const slider = document.getElementById('severityRange');
+        const rangeVal = document.getElementById('rangeValue');
+        slider.addEventListener('input', () => rangeVal.innerText = slider.value);
+
+        const saveBtn = document.querySelector('.btn-primary');
+        saveBtn.addEventListener('click', async () => {
+            saveBtn.textContent = 'Saving...';
+            saveBtn.disabled = true;
+
+            try {
+                const selections = document.querySelectorAll('.option-btn.selected');
+                const notes = document.querySelector('textarea').value;
+                const severity = document.getElementById('severityRange').value;
+
+                // Save one "Core" symptom entry with the numerical severity for the graph
+                await saveSymptom("Clinical Severity", "Daily Rating", severity, notes);
+
+                // Save the individual categorical observations
+                for (const sel of selections) {
+                    const category = sel.closest('.tracking-card').querySelector('h2').innerText;
+                    const observation = sel.innerText;
+                    await saveSymptom(category, observation, 0, "");
+                }
+
+                saveBtn.textContent = 'Observations Saved! ✓';
+                saveBtn.style.backgroundColor = '#6B7B4E';
+                setTimeout(() => {
+                    saveBtn.textContent = 'Save Observations';
+                    saveBtn.style.backgroundColor = '';
+                    saveBtn.disabled = false;
+                }, 2000);
+
+            } catch (err) {
+                console.error(err);
+                alert("Error saving: " + err.message);
+                saveBtn.textContent = 'Error Saving';
+                saveBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

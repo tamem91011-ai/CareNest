@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caregiver Academy | CareNest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #F8F5F2;
+        }
+
+        .academy-container {
+            max-width: 1100px;
+            margin: 100px auto 40px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 40px;
+            padding: 0 24px;
+        }
+
+        .academy-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .academy-nav {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px 16px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover {
+            background: #fdfaf7;
+            color: var(--primary);
+        }
+
+        .academy-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .academy-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        /* Interactive Protocol Grid */
+        .protocol-flex-grid {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+            min-height: 280px;
+        }
+
+        .protocol-card {
+            background: #fafafa;
+            border-radius: 20px;
+            padding: 24px;
+            border-left: 4px solid var(--primary);
+            flex: 1;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .protocol-card:hover {
+            background: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .protocol-card.expanded {
+            flex: 3;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            border-left-width: 8px;
+        }
+
+        .protocol-card h4 {
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 12px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .protocol-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        .protocol-card.expanded p {
+            opacity: 1;
+        }
+
+        .protocol-card .expand-icon {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+
+        .protocol-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .guide-step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .alert-box {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            color: #c53030;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            gap: 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">CareNest</div>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;">&larr;
+                    Workspace</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="academy-container">
+        <aside class="academy-sidebar">
+            <div class="academy-nav">
+                <h3
+                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-light); margin-bottom: 16px; letter-spacing: 1px;">
+                    Modules</h3>
+                <a href="#ops" class="nav-item">Operations</a>
+                <a href="#clinical" class="nav-item">Protocols</a>
+                <a href="#ethics" class="nav-item">Ethics</a>
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+                <a href="dashboard.html" class="nav-item" style="color: var(--secondary); font-size: 0.8rem;">Return to
+                    Charts</a>
+            </div>
+        </aside>
+
+        <div class="academy-content">
+            <header>
+                <div style="display: flex; align-items: flex-end; gap: 12px;">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--secondary);">Caregiver Academy</h1>
+                    <span class="badge badge-ok" style="margin-bottom: 12px;">v1.0 Professional</span>
+                </div>
+                <p style="color: var(--text-light); margin-top: 8px; font-size: 1.1rem;">Clinical mastery and system
+                    operations for Resident A.</p>
+            </header>
+
+            <section id="ops" class="academy-section">
+                <div class="section-header">
+                    <i data-lucide="monitor" style="color: var(--primary); width: 28px;"></i>
+                    <h2 style="font-size: 1.5rem; font-weight: 800;">System Operations</h2>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.1rem; margin-bottom: 6px;">Synchronizing Physical Logs
+                        </h4>
+                        <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.6;">Every medication
+                            given or symptom observed must be logged in real-time. CareNest uses an asynchronous cloud
+                            engine—meaning once you click 'Save', the record is instantly visible to the medical team.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h4 style="font-weight: 800; font-size: 1.1rem; margin-bottom: 6px;">Consulting the AI Clinical
+                            Advisor</h4>
+                        <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.6;">The AI Advisor
+                            cross-references your logs with patient history. Use it to check for 'silent' patterns, such
+                            as a correlation between medication time and agitation levels.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="clinical" class="academy-section">
+                <div class="section-header">
+                    <i data-lucide="stethoscope" style="color: var(--primary); width: 28px;"></i>
+                    <h2 style="font-size: 1.5rem; font-weight: 800;">Clinical Protocols</h2>
+                </div>
+
+                <div class="protocol-flex-grid">
+                    <div class="protocol-card expanded" onclick="expandProtocol(this)">
+                        <h4><i data-lucide="droplets" style="width: 18px;"></i> Hydration <i data-lucide="chevron-right"
+                                class="expand-icon" style="width: 16px;"></i></h4>
+                        <p>Elderly patients often lose their thirst reflex. Dehydration is the #1 cause of acute
+                            confusion. Ensure <b>Assisted Hydration (250ml)</b> is performed during every morning window
+                            to maintain physiological baseline.</p>
+                    </div>
+
+                    <div class="protocol-card" onclick="expandProtocol(this)" style="border-left-color: var(--accent);">
+                        <h4><i data-lucide="brain-circuit" style="width: 18px;"></i> Neurological <i
+                                data-lucide="chevron-right" class="expand-icon" style="width: 16px;"></i></h4>
+                        <p>Memory recall exercises should be performed between <b>02:00 PM and 04:00 PM</b>. This is the
+                            typical window of peak secondary alertness before late-afternoon 'Sundowning' symptoms may
+                            begin to manifest.</p>
+                    </div>
+
+                    <div class="protocol-card" onclick="expandProtocol(this)" style="border-left-color: #6366F1;">
+                        <h4><i data-lucide="wind" style="width: 18px;"></i> Airway <i data-lucide="chevron-right"
+                                class="expand-icon" style="width: 16px;"></i></h4>
+                        <p>Professional posture management is key. If breathing becomes shallow, verify that <b>Resident
+                                A</b> is seated at a minimum 45-degree angle. This protocol is critical for preventing
+                            secondary respiratory stress.</p>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <i data-lucide="alert-circle" style="width: 24px; flex-shrink: 0; color: #E53E3E;"></i>
+                    <div style="line-height: 1.5;">
+                        <span
+                            style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #E53E3E; margin-bottom: 4px;">Critical
+                            Alert</span>
+                        If a <b>"Swallowing Difficulty"</b> log is entered, all oral medication must be suspended until
+                        a physician review of dysphagia risks.
+                    </div>
+                </div>
+            </section>
+
+            <section id="ethics" class="academy-section">
+                <div class="section-header">
+                    <i data-lucide="shield-check" style="color: var(--primary); width: 28px;"></i>
+                    <h2 style="font-size: 1.5rem; font-weight: 800;">Ethics & Integrity</h2>
+                </div>
+                <p style="color: var(--text-light); line-height: 1.7; font-size: 1rem;">
+                    Data integrity is clinical integrity. CareNest operates on a <b>Zero-Tamper Policy</b>. Every
+                    handover note is digitally signed and timestamped. When logging, remember the clinical gold
+                    standard: <i>"If it wasn't logged, it wasn't done."</i>
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function expandProtocol(card) {
+            // Remove 'expanded' from all cards
+            document.querySelectorAll('.protocol-card').forEach(c => c.classList.remove('expanded'));
+            // Add to this one
+            card.classList.add('expanded');
+        }
+    </script>
+</body>
+
+</html>
