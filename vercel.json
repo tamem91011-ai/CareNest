@@ -1,10 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/(.*)",
+            "source": "/(.*)",
             "destination": "/api/index.py"
         }
-    ],
-    "cleanUrls": true,
-    "trailingSlash": false
+    ]
 }
