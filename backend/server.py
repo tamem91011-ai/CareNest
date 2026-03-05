@@ -21,6 +21,7 @@ genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 # --- API ROUTES ---
 
 @app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({
         "status": "healthy",
@@ -28,17 +29,17 @@ def health_check():
         "database": "connected" if supabase else "error"
     }), 200
 
-@app.route('/medications', methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/api/medications', methods=['GET', 'POST', 'OPTIONS'])
 def handle_medications():
     if request.method == 'POST':
         return jsonify({"status": "success", "message": "Record received"}), 201
     return jsonify({"medications": []}), 200
 
-@app.route('/symptoms', methods=['POST', 'OPTIONS'])
+@app.route('/api/symptoms', methods=['POST', 'OPTIONS'])
 def log_symptoms():
     return jsonify({"status": "received"}), 201
 
-@app.route('/ai-insight', methods=['POST', 'OPTIONS'])
+@app.route('/api/ai-insight', methods=['POST', 'OPTIONS'])
 def get_ai_insight():
     user_id = request.json.get('user_id')
     prompt_override = request.json.get('prompt') 
