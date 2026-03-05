@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://pwxxdsmnqjodarkrueud.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3eHhkc21ucWpvZGFya3J1ZXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODQxOTYsImV4cCI6MjA4NTY2MDE5Nn0.gH6LJB94gxc2Et3fPEmbf6OoudYL9wSw1LgU03wLM0c";
+const SUPABASE_KEY = "sb_publishable_aPFHRQ4IItEERqu90U7_ng_LWSJQauB";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
