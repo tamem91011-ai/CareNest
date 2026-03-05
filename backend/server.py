@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from supabase import create_client, Client
@@ -7,7 +7,7 @@ import google.generativeai as genai
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+app = Flask(__name__)
 CORS(app) 
 
 # Supabase Initialization
@@ -18,15 +18,8 @@ supabase: Client = create_client(url, key)
 # Gemini Initialization
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
-# --- STATIC FILE SERVING ---
+# --- API ROUTES ---
 
-@app.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
-
-# --- API ROUTES (with flexible prefixes) ---
-
-@app.route('/api/health', methods=['GET'])
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({
@@ -35,22 +28,16 @@ def health_check():
         "database": "connected" if supabase else "error"
     }), 200
 
-@app.route('/api/medications', methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/medications', methods=['GET', 'POST', 'OPTIONS'])
 def handle_medications():
-    """Endpoint for medications"""
     if request.method == 'POST':
-        data = request.json
-        # Simplified response for deployment verification
         return jsonify({"status": "success", "message": "Record received"}), 201
     return jsonify({"medications": []}), 200
 
-@app.route('/api/symptoms', methods=['POST', 'OPTIONS'])
 @app.route('/symptoms', methods=['POST', 'OPTIONS'])
 def log_symptoms():
     return jsonify({"status": "received"}), 201
 
-@app.route('/api/ai-insight', methods=['POST', 'OPTIONS'])
 @app.route('/ai-insight', methods=['POST', 'OPTIONS'])
 def get_ai_insight():
     user_id = request.json.get('user_id')
@@ -75,19 +62,10 @@ def get_ai_insight():
             "clinical_insight": response.text
         })
     except Exception as e:
-        # Fallback to a human-friendly message
         return jsonify({
             "status": "simulated",
-            "clinical_insight": "Resident A is stable. I recommend continuing the current observation schedule. (Note: AI is in stable mode)."
+            "clinical_insight": "Resident A is stable. I recommend continuing the current observation schedule."
         })
-
-# --- CATCH-ALL FOR STATIC FILES ---
-@app.route('/<path:path>')
-def serve_all(path):
-    if os.path.exists(path):
-        return send_from_directory('.', path)
-    # Default to index for client-side routing or 404
-    return send_from_directory('.', 'index.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

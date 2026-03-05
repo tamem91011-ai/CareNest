@@ -4,5 +4,7 @@
             "source": "/api/(.*)",
             "destination": "/api/index.py"
         }
-    ]
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
 }
